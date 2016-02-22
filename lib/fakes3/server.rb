@@ -506,16 +506,18 @@ module FakeS3
 
 
   class Server
-    def initialize(address,port,store,hostname,ssl_cert_path,ssl_key_path)
+    def initialize(address,port,store,hostname,ssl_cert_path,ssl_key_path,do_not_reverse_lookup)
       @address = address
       @port = port
       @store = store
       @hostname = hostname
       @ssl_cert_path = ssl_cert_path
       @ssl_key_path = ssl_key_path
+      @do_not_reverse_lookup = do_not_reverse_lookup
       webrick_config = {
         :BindAddress => @address,
-        :Port => @port
+        :Port => @port,
+        :DoNotReverseLookup => @do_not_reverse_lookup
       }
       if !@ssl_cert_path.to_s.empty?
         webrick_config.merge!(

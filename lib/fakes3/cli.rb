@@ -14,6 +14,7 @@ module FakeS3
     method_option :limit, :aliases => '-l', :type => :string, :desc => 'Rate limit for serving (ie. 50K, 1.0M)'
     method_option :sslcert, :type => :string, :desc => 'Path to SSL certificate'
     method_option :sslkey, :type => :string, :desc => 'Path to SSL certificate key'
+    method_option :do_not_reverse_lookup, :type => :boolean, :desc => "Disable reverese lookups for Webrick"
 
     def server
       store = nil
@@ -53,7 +54,7 @@ module FakeS3
       end
 
       puts "Loading FakeS3 with #{root} on port #{options[:port]} with hostname #{hostname}"
-      server = FakeS3::Server.new(address,options[:port],store,hostname,ssl_cert_path,ssl_key_path)
+      server = FakeS3::Server.new(address,options[:port],store,hostname,ssl_cert_path,ssl_key_path,options[:do_not_reverse_lookup])
       server.serve
     end
 
