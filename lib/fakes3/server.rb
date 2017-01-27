@@ -517,7 +517,8 @@ module FakeS3
       webrick_config = {
         :BindAddress => @address,
         :Port => @port,
-        :DoNotReverseLookup => @do_not_reverse_lookup
+        :DoNotReverseLookup => @do_not_reverse_lookup,
+        :AccessLog => WEBrick::AccessLog::COMMON_LOG_FORMAT + " %T"
       }
       if !@ssl_cert_path.to_s.empty?
         webrick_config.merge!(
