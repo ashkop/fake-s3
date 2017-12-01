@@ -89,7 +89,7 @@ module FakeS3
           metadata.fetch(:content_type) { "application/octet-stream" }
         real_obj.content_disposition = request.query['response-content-disposition'] ||
           metadata[:content_disposition]
-        real_obj.content_encoding = metadata.fetch(:content_encoding) # if metadata.fetch(:content_encoding)
+        real_obj.content_encoding = metadata.fetch(:content_encoding) { nil }# if metadata.fetch(:content_encoding)
         real_obj.io = RateLimitableFile.open(File.join(obj_root, "content"), 'rb')
         real_obj.size = metadata.fetch(:size) { 0 }
         real_obj.creation_date = File.ctime(obj_root).utc.iso8601(SUBSECOND_PRECISION)
